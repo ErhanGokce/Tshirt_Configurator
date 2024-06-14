@@ -2,9 +2,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
 import './index.css';
-import { Canvas } from '@react-three/fiber'; 
-import { OrbitControls, Center, useGLTF, Environment, AccumulativeShadows, RandomizedLight } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber'; 
+import { Center, useGLTF, Environment, AccumulativeShadows, RandomizedLight } from '@react-three/drei';
 import { useRef } from 'react';
+import { easing } from 'maath';
 
 
 
@@ -17,10 +18,12 @@ export const App = ({ position = [-1, 0, 2.5 ], fov = 25 }) => (
       camera={{ position, fov}}>
         <ambientLight intensity={0.5} />
         <Environment preset='city' />
-        <Center />
+        <CameraRig>
+        <Center>
         <Shirt />
         <Backdrop />
-        <OrbitControls />
+        </Center>
+        </CameraRig>
       </Canvas>
    
 )
@@ -66,6 +69,20 @@ function Backdrop() {
             />
         </AccumulativeShadows>
     )
+}
+
+function CameraRig({ children }) {
+    const group = useRef()
+
+    useFrame((state, delta) => {
+      easing.dampE(
+        group.current.rotation,
+        [state.pointer.y / 10, -state.pointer.x / 5, 0],
+        0.25,
+        delta
+      )
+    })
+        return <group ref={group}>{children}</group>
 }
 
 useGLTF.preload('models/shirt_baked_collapsed.glb')
