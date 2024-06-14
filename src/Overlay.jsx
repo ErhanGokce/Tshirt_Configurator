@@ -6,7 +6,13 @@ import {
   AiOutlineArrowLeft
 } from 'react-icons/ai'
 
+import { useSnapshot } from 'valtio';
+import { state } from './store';
+
+
 export default function Overlay() {
+  const snap = useSnapshot(state)
+
   return (
     <div className="container">
       <header>
@@ -16,7 +22,7 @@ export default function Overlay() {
         </div>
       </header>
 
-      <Customizer />
+      {snap.intro ? <Intro /> : <Customizer />}
     </div>
   )
 }
@@ -43,7 +49,7 @@ function Intro() {
                 customization tool. <strong>Unleash your imagination</strong>{' '}
                 and define your own style.
               </p>
-              <button style={{ background: 'black' }}>
+              <button style={{ background: 'black' }} onClick={() => {(state.intro = false)}}>
                 CUSTOMIZE IT <AiOutlineHighlight size="1.3em" />
               </button>
             </div>
@@ -90,7 +96,7 @@ function Customizer() {
           DOWNLOAD
           <AiFillCamera size="1.3em" />
         </button>
-        <button className="exit" style={{ background: 'black' }}>
+        <button className="exit" style={{ background: 'black' }} onClick={() => {(state.intro = true)}}>
           GO BACK
           <AiOutlineArrowLeft size="1.3em" />
         </button>
