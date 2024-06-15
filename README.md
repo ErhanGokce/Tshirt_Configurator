@@ -25,7 +25,7 @@
     <a href="https://github.com/ErhanGokce/Tshirt_Configurator"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://example.com/">View Demo</a>
+    <a href="https://tshirt-customizer-erhan.vercel.app">View Demo</a>
     ·
     <a href="https://github.com/ErhanGokce/Tshirt_Configurator/issues">Report Bug</a>
     ·
@@ -66,7 +66,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://tshirt-customizer.vercel.app)
 
 There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
@@ -112,7 +112,7 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
-1. View the Demo [https://example.com](https://example.com)
+1. View the Demo [https://tshirt-customizer-erhan](https://tshirt-customizer-erhan.vercel.app)
 2. Clone the repo
    ```sh
    git clone https://github.com/your_username_/Project-Name.git
@@ -131,7 +131,7 @@ _Below is an example of how you can instruct your audience on installing and set
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [DEMO](https://example.com)_
+_For more examples, please refer to the [DEMO](https://tshirt-customizer-erhan.vercel.app)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
