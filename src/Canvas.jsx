@@ -4,7 +4,6 @@
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { easing } from 'maath'
-import * as THREE from 'three'
 
 import {
   useGLTF,
@@ -21,10 +20,10 @@ import { state } from './store'
 export const App = ({ position = [0, 0, 2.5], fov = 25 }) => (
   <Canvas
     shadows
+    gl={{ preserveDrawingBuffer: true }}
     camera={{ position, fov }}
     eventSource={document.getElementById('root')}
-    eventPrefix="client"
-    gl={{ antialias: true, preserveDrawingBuffer: true }}>
+    eventPrefix="client">
     <ambientLight intensity={0.5} />
     <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/potsdamer_platz_1k.hdr" />
 
@@ -110,8 +109,15 @@ function Backdrop() {
 function CameraRig({ children }) {
   const group = useRef()
 
+  const snap = useSnapshot(state)
+
   useFrame((state, delta) => {
-    easing.damp3(state.camera.position, [0, 0, 2], 0.25, delta)
+    easing.damp3(
+      state.camera.position,
+      [snap.intro ? -state.viewport.width / 4 : 0, 0, 2],
+      0.25,
+      delta
+    )
     easing.dampE(
       group.current.rotation,
       [state.pointer.y / 10, -state.pointer.x / 5, 0],
@@ -123,4 +129,6 @@ function CameraRig({ children }) {
 }
 
 useGLTF.preload('./models/shirt_baked_collapsed.glb')
+;['/react.png', '/three2.png', '/pmndrs.png'].forEach(useTexture.preload)
+
 
