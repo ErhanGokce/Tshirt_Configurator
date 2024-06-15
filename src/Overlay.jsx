@@ -8,7 +8,6 @@ import {
 import { useSnapshot } from 'valtio';
 import { state } from './store';
 
-
 export default function Overlay() {
   const snap = useSnapshot(state)
 
@@ -55,14 +54,11 @@ function Intro() {
 function Customizer() {
   const snap = useSnapshot(state)
 
-  const colors = ['#ccc', '#EFBD4E', '#80C670', '#726DE8', '#EF674E', '#353934']
-  const decals = ['react', 'three2', 'pmndrs']
-
   return (
     <section key="custom">
       <div className="customizer">
         <div className="color-options">
-          {colors.map((color) => (
+          {snap.colors.map((color) => (
             <div
               key={color}
               className="circle"
@@ -70,19 +66,39 @@ function Customizer() {
               onClick={() => (state.selectedColor = color)}></div>
           ))}
         </div>
+
         <div className="decals">
           <div className="decals--container">
-            {decals.map((decal) => (
-              <div key={decal} className="decal">
+            {snap.decals.map((decal) => (
+              <div
+                key={decal}
+                className="decal"
+                onClick={() => (state.selectedDecal = decal)}>
                 <img src={decal + '_thumb.png'} alt="brand" />
               </div>
             ))}
           </div>
         </div>
-        <button className="share" style={{ background: snap.selectedColor }}>
+
+        <button
+          className="share"
+          style={{ background: snap.selectedColor }}
+          onClick={() => {
+            const link = document.createElement('a')
+            link.setAttribute('download', 'canvas.png')
+            link.setAttribute(
+              'href',
+              document
+                .querySelector('canvas')
+                .toDataURL('image/png')
+                .replace('image/png', 'image/octet-stream')
+            )
+            link.click()
+          }}>
           DOWNLOAD
           <AiFillCamera size="1.3em" />
         </button>
+
         <button
           className="exit"
           style={{ background: snap.selectedColor }}

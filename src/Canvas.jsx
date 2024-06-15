@@ -4,15 +4,17 @@
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { easing } from 'maath'
+import * as THREE from 'three'
 
 import {
   useGLTF,
   Environment,
   Center,
   AccumulativeShadows,
-  RandomizedLight
+  RandomizedLight,
+  useTexture,
+  Decal
 } from '@react-three/drei'
-
 import { useSnapshot } from 'valtio'
 import { state } from './store'
 
@@ -21,7 +23,8 @@ export const App = ({ position = [0, 0, 2.5], fov = 25 }) => (
     shadows
     camera={{ position, fov }}
     eventSource={document.getElementById('root')}
-    eventPrefix="client">
+    eventPrefix="client"
+    gl={{ antialias: true }}>
     <ambientLight intensity={0.5} />
     <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/potsdamer_platz_1k.hdr" />
 
@@ -37,6 +40,8 @@ export const App = ({ position = [0, 0, 2.5], fov = 25 }) => (
 function Shirt(props) {
   const snap = useSnapshot(state)
 
+  const texture = useTexture(`/${snap.selectedDecal}.png`)
+
   const { nodes, materials } = useGLTF('./models/shirt_baked_collapsed.glb')
 
   useFrame((state, delta) =>
@@ -50,7 +55,16 @@ function Shirt(props) {
       material={materials.lambert1}
       material-roughness={1}
       {...props}
-      dispose={null}></mesh>
+      dispose={null}>
+      <Decal
+        position={[0, 0.04, 0.15]}
+        rotation={[0, 0, 0]}
+        scale={0.15}
+        
+        map={texture}
+        
+      />
+    </mesh>
   )
 }
 
@@ -95,6 +109,7 @@ function Backdrop() {
 
 function CameraRig({ children }) {
   const group = useRef()
+
   useFrame((state, delta) => {
     easing.damp3(state.camera.position, [0, 0, 2], 0.25, delta)
     easing.dampE(
@@ -108,3 +123,4 @@ function CameraRig({ children }) {
 }
 
 useGLTF.preload('./models/shirt_baked_collapsed.glb')
+
