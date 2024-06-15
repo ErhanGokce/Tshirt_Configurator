@@ -24,7 +24,7 @@ export const App = ({ position = [0, 0, 2.5], fov = 25 }) => (
     camera={{ position, fov }}
     eventSource={document.getElementById('root')}
     eventPrefix="client"
-    gl={{ antialias: true }}>
+    gl={{ antialias: true, preserveDrawingBuffer: true }}>
     <ambientLight intensity={0.5} />
     <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/potsdamer_platz_1k.hdr" />
 
